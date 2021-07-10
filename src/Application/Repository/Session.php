@@ -6,8 +6,6 @@ use Doctrine\DBAL\Connection;
 use NursingLog\Domain\Session\Entity;
 use NursingLog\Domain\Session\EntityList;
 use NursingLog\Domain\Session\Repository;
-use NursingLog\Domain\ValueObject\DateTime;
-use NursingLog\Domain\ValueObject\Uuid;
 
 class Session implements Repository
 {
@@ -31,7 +29,7 @@ class Session implements Repository
 
     public function fetchAll() : EntityList
     {
-        $data = $this->dbConnection->fetchAllAssociative('SELECT * FROM `session`');
+        $data = $this->dbConnection->fetchAllAssociative('SELECT * FROM `session` ORDER BY time ASC');
 
         return EntityList::createFromArray($data);
     }

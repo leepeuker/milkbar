@@ -4,22 +4,24 @@ document.addEventListener('DOMContentLoaded', async function () {
   await loadInitialData()
 
   document.getElementById('addNursingTime').addEventListener('click', function () {
-    postData('/api/session').then(test => addSessionToTable(test.time))
+    postData('/api/session').then(test => addSessionToList(test.time))
   })
 })
 
-function addSessionToTable (sessionTime) {
-  let tbodyRef = document.getElementById('nursingTimeTable')
-  var newRow = tbodyRef.insertRow(1)
-  var newCell = newRow.insertCell()
-  newCell.appendChild(document.createTextNode(sessionTime))
+function addSessionToList (sessionTime) {
+  let sessionList = document.getElementById('sessionList')
+  let li = document.createElement('li');
+
+  li.classList.add('list-group-item')
+  li.appendChild(document.createTextNode(sessionTime));
+  sessionList.prepend(li);
 }
 
 async function loadInitialData () {
   await fetchSessions()
 
   sessions.forEach(function (session) {
-    addSessionToTable(session.time)
+    addSessionToList(session.time)
   })
 }
 
