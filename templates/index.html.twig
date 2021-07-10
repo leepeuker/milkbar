@@ -6,19 +6,16 @@
 
 {% block body %}
     <h1>Nursing log</h1>
-    <button type="button" class="btn btn-primary">Add nursing time</button>  <span id="test"></span>
-    <script>
-      var span = document.getElementById('test');
-
-      function time() {
-        var d = new Date();
-        var s = d.getSeconds();
-        var m = d.getMinutes();
-        var h = d.getHours();
-        span.textContent =
-          ("0" + h).substr(-2) + ":" + ("0" + m).substr(-2) + ":" + ("0" + s).substr(-2);
-      }
-
-      setInterval(time, 1000);
-    </script>
+    <button type="button" class="btn btn-lg btn-primary" id="addNursingTime">Add nursing time</button>
+    <div class="table-responsive">
+        <table class="table" id="nursingTimeTable">
+            <thead>
+            <tr>
+                <th scope="col">Time</th>
+            </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
 {% endblock %}

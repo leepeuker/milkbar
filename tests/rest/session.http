@@ -1,0 +1,11 @@
+GET http://127.0.0.1:8877/api/session
+Accept: */*
+Cache-Control: no-cache
+
+###
+
+POST http://127.0.0.1:8877/api/session
+Accept: */*
+Cache-Control: no-cache
+
+###
