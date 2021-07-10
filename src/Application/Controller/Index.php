@@ -1,12 +1,12 @@
 <?php declare(strict_types=1);
 
-namespace NursingLog\Controller;
+namespace NursingLog\Application\Controller;
 
 use Twig\Environment;
 
 class Index
 {
-    private $twig;
+    private Environment $twig;
 
     public function __construct(Environment $twig)
     {

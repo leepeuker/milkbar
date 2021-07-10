@@ -1,3 +1,6 @@
 .env
 vendor/
 .idea/
+tmp/*
+!tmp/.gitkeep
+settings/config.ini

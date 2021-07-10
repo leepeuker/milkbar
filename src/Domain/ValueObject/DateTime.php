@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace NursingLog\ValueObject;
+namespace NursingLog\Domain\ValueObject;
 
 class DateTime implements \JsonSerializable
 {

@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-use NursingLog\Controller;
+use NursingLog\Application\Controller;
 
 return static function(FastRoute\RouteCollector $routeCollector) {
     $routeCollector->addRoute(

@@ -24,3 +24,16 @@ services:
     volumes:
       - ./:/var/www
       - ./build/php/php.ini:/usr/local/etc/php/php.ini
+
+  nursing-log-mysql:
+    image: mysql:5.7
+    container_name: nursing-log-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    volumes:
+      - ./tmp/db/:/var/lib/mysql
+    ports:
+      - "${MYSQL_PORT}:3306"
