@@ -1,6 +1,5 @@
 var staticDevCoffee = 'nursing-log';
 var assets = [
-  '/',
   '/index.php',
   '/css/app.css',
   '/js/app.js'
