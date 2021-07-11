@@ -17,9 +17,9 @@ class Session
         $this->repository = $repository;
     }
 
-    public function delete(array $routeParameters) : void
+    public function delete(Request $request) : void
     {
-        $this->repository->delete(Uuid::createFromString($routeParameters['id']));
+        $this->repository->delete(Uuid::createFromString($request->getRouteParameters()['id']));
     }
 
     public function get(Request $request) : void
