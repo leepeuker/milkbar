@@ -25,7 +25,6 @@ switch ($routeInfo[0]) {
         break;
     case FastRoute\Dispatcher::FOUND:
         $handler = $routeInfo[1];
-        $vars = $routeInfo[2];
-        $response = $container->call($handler);
+        $response = $container->call($handler, [$routeInfo[2]]);
         break;
 }

@@ -6,6 +6,7 @@ use Doctrine\DBAL\Connection;
 use NursingLog\Domain\Session\Entity;
 use NursingLog\Domain\Session\EntityList;
 use NursingLog\Domain\Session\Repository;
+use NursingLog\Domain\ValueObject\Uuid;
 
 class Session implements Repository
 {
@@ -21,13 +22,22 @@ class Session implements Repository
         $this->dbConnection->insert(
             'session',
             [
-                'id' => $session->getId(),
-                'time' => $session->getTime(),
+                'id' => (string)$session->getId(),
+                'time' => (string)$session->getTime(),
             ]
         );
     }
 
-    public function fetchAll() : EntityList
+    public function delete(Uuid $sessionId) : void
+    {
+        $this->dbConnection->delete(
+            'session',
+            ['id' => (string)$sessionId,]
+        );
+    }
+
+    public
+    function fetchAll() : EntityList
     {
         $data = $this->dbConnection->fetchAllAssociative('SELECT * FROM `session` ORDER BY time ASC');
 

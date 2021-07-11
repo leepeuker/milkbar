@@ -6,6 +6,11 @@
     display: none !important;
 }
 
-li:hover {
-    background-color: yellow;
+li:hover{
+    background-color: rgb(242, 242, 242);
+}
+
+.list-group-item{
+    padding-top: 0.9rem;
+    padding-bottom: 0.9rem;
 }

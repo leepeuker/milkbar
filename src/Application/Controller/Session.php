@@ -16,6 +16,11 @@ class Session
         $this->repository = $repository;
     }
 
+    public function delete(array $parameters) : void
+    {
+        $this->repository->delete(Uuid::createFromString($parameters['id']));
+    }
+
     public function get() : void
     {
         echo json_encode($this->repository->fetchAll(), JSON_THROW_ON_ERROR);

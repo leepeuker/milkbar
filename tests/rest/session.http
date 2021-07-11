@@ -9,3 +9,9 @@ Accept: */*
 Cache-Control: no-cache
 
 ###
+
+DELETE http://127.0.0.1:8877/api/session/87c28595-8ac3-4ca9-acc4-133c343001df
+Accept: */*
+Cache-Control: no-cache
+
+###
