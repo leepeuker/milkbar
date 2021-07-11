@@ -36,7 +36,7 @@ class Entity implements \JsonSerializable
     {
         return [
             'id' => $this->id,
-            'time' => $this->sessionTime,
+            'time' => $this->sessionTime->format(DATE_RFC2822),
         ];
     }
 }

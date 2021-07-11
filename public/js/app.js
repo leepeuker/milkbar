@@ -26,7 +26,7 @@ function addSessionToList (session) {
 
   li.id = session.id
   li.classList.add('list-group-item', 'list-group-item-main', 'd-flex', 'justify-content-between', 'align-items-center')
-  li.appendChild(document.createTextNode(session.time))
+  li.appendChild(document.createTextNode(formatDateToLocalTime(session.time)))
   li.addEventListener('click', function () {
     showSessionModal(this.id)
   })
@@ -82,4 +82,12 @@ function showSessionModal (sessionId) {
     keyboard: false
   })
   myModal.show()
+}
+
+function formatDateToLocalTime (dateString) {
+  let date = new Date(Date.parse(dateString))
+
+  let formattedDateTimeString = date.toLocaleString('de-DE')
+
+  return formattedDateTimeString.substring(0, formattedDateTimeString.length - 3);
 }
