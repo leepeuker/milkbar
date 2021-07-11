@@ -1,7 +1,7 @@
 let sessions
 
 document.addEventListener('DOMContentLoaded', async function () {
-  await loadInitialData()
+  await refreshSessionData()
 
   document.getElementById('addNursingTime').addEventListener('click', function () {
     postData('/api/session').then(session => addSessionToList(session))
@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', async function () {
   })
 
   document.getElementById('deleteButton').addEventListener('click', function (event) {
-    deleteData('/api/session/' + document.getElementById('sessionIdModalInput').value).then(session => loadInitialData())
+    deleteData('/api/session/' + document.getElementById('sessionIdModalInput').value).then(session => refreshSessionData())
   })
 })
 
@@ -33,12 +33,17 @@ function addSessionToList (session) {
   sessionList.prepend(li)
 }
 
-async function loadInitialData () {
+async function refreshSessionData () {
+  document.getElementById('sessionList').innerHTML = ''
+  document.getElementById('loadingSpinner').classList.remove('hidden')
+
   await fetchSessions()
 
   sessions.forEach(function (session) {
     addSessionToList(session)
   })
+
+  document.getElementById('loadingSpinner').classList.add('hidden')
 }
 
 function fetchSessions () {
@@ -89,5 +94,5 @@ function formatDateToLocalTime (dateString) {
 
   let formattedDateTimeString = date.toLocaleString('de-DE')
 
-  return formattedDateTimeString.substring(0, formattedDateTimeString.length - 3);
+  return formattedDateTimeString.substring(0, formattedDateTimeString.length - 3)
 }
