@@ -28,7 +28,7 @@ class Session
 
     public function post() : void
     {
-        $session = Entity::createFromParameters(Uuid::create(), DateTime::create());
+        $session = Entity::createFromParameters(Uuid::create(), DateTime::create(), null, null);
 
         $this->repository->create($session);
 
@@ -43,7 +43,9 @@ class Session
         $this->repository->update(
             Entity::createFromParameters(
                 Uuid::createFromString($routeParameters['id']),
-                DateTime::createFromString($requestData['time'])
+                DateTime::createFromString($requestData['time']),
+                empty($requestData['minutesLeft']) === true ? null : (int)$requestData['minutesLeft'],
+                empty($requestData['minutesRight']) === true ? null : (int)$requestData['minutesRight'],
             )
         );
     }

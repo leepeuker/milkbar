@@ -15,15 +15,37 @@ document.addEventListener('DOMContentLoaded', async function () {
     deleteData('/api/session/' + document.getElementById('sessionIdModalInput').value).then(session => refreshSessionData())
   })
 
-  document.getElementById('updateButton').addEventListener('click', function (event) {
+  document.getElementById('leftBoob').addEventListener('click', function (event) {
+    document.getElementById('minutesLeftInput').disabled = this.checked === false
 
+    if (this.checked === false) {
+      document.getElementById('minutesLeftInput').value = ''
+    }
+  })
+
+  document.getElementById('rightBoob').addEventListener('click', function (event) {
+    document.getElementById('minutesRightInput').disabled = this.checked === false
+
+    if (this.checked === false) {
+      document.getElementById('minutesRightInput').value = ''
+    }
+  })
+
+  document.getElementById('updateButton').addEventListener('click', function (event) {
     var matches = document.getElementById('sessionTimeModalInput').value.match(/(\d{1,2})\.(\d{1,2})\.(\d{4}), (\d{2}):(\d{2})/)
     let date = new Date(`${matches[3]}-${matches[2].padStart(2, '0')}-${matches[1].padStart(2, '0')} ${matches[4]}:${matches[5]}`)
+
+    let minutesLeft = document.getElementById('minutesLeftInput').value
+    let minutesRight = document.getElementById('minutesRightInput').value
+    console.log(minutesLeft)
+    console.log(minutesRight)
 
     putData(
       '/api/session/' + document.getElementById('sessionIdModalInput').value,
       {
-        'time': date.toISOString()
+        'time': date.toISOString(),
+        'minutesLeft': minutesLeft,
+        'minutesRight': minutesRight
       }
     ).then(session => refreshSessionData())
   })
@@ -31,6 +53,12 @@ document.addEventListener('DOMContentLoaded', async function () {
 
 function resetSessionModal () {
   document.getElementById('sessionTimeModalInput').value = null
+  document.getElementById('leftBoob').checked = false
+  document.getElementById('minutesLeftInput').value = ''
+  document.getElementById('minutesLeftInput').disabled = true
+  document.getElementById('rightBoob').checked = false
+  document.getElementById('minutesRightInput').value = ''
+  document.getElementById('minutesRightInput').disabled = true
 }
 
 function addSessionToList (session) {
@@ -43,6 +71,8 @@ function addSessionToList (session) {
   li.addEventListener('click', function () {
     showSessionModal(this.id)
   })
+  li.setAttribute('minutesRight', session.minutesRight)
+  li.setAttribute('minutesLeft', session.minutesLeft)
   sessionList.prepend(li)
 }
 
@@ -106,6 +136,19 @@ async function deleteData (url) {
 function showSessionModal (sessionId) {
   document.getElementById('sessionIdModalInput').value = sessionId
   document.getElementById('sessionTimeModalInput').value = document.getElementById(sessionId).innerText
+
+  let minutesLeft = parseInt(document.getElementById(sessionId).getAttribute('minutesleft'))
+  if (minutesLeft > 0) {
+    document.getElementById('leftBoob').checked = true
+    document.getElementById('minutesLeftInput').disabled = false
+    document.getElementById('minutesLeftInput').value = minutesLeft
+  }
+  let minutesRight = parseInt(document.getElementById(sessionId).getAttribute('minutesright'))
+  if (minutesRight > 0) {
+    document.getElementById('rightBoob').checked = true
+    document.getElementById('minutesRightInput').disabled = false
+    document.getElementById('minutesRightInput').value = minutesRight
+  }
 
   var myModal = new bootstrap.Modal(document.getElementById('sessionModal'), {
     keyboard: false

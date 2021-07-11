@@ -49,6 +49,8 @@ class Session implements Repository
             'session',
             [
                 'time' => (string)$session->getTime(),
+                'minutesLeft' => $session->getMinutesLeft(),
+                'minutesRight' => $session->getMinutesRight(),
             ],
             [
                 'id' => (string)$session->getId(),
