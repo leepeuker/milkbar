@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', async function () {
   await refreshSessionData()
 
   document.getElementById('addNursingTime').addEventListener('click', function () {
-    postData('/api/session').then(session => addSessionToList(session))
+    postData('/api/session').then(() => refreshSessionData())
   })
 
   document.getElementById('sessionModal').addEventListener('hidden.bs.modal', function () {
@@ -37,8 +37,6 @@ document.addEventListener('DOMContentLoaded', async function () {
 
     let minutesLeft = document.getElementById('minutesLeftInput').value
     let minutesRight = document.getElementById('minutesRightInput').value
-    console.log(minutesLeft)
-    console.log(minutesRight)
 
     putData(
       '/api/session/' + document.getElementById('sessionIdModalInput').value,
@@ -47,7 +45,7 @@ document.addEventListener('DOMContentLoaded', async function () {
         'minutesLeft': minutesLeft,
         'minutesRight': minutesRight
       }
-    ).then(session => refreshSessionData())
+    ).then(() => refreshSessionData())
   })
 })
 
@@ -87,6 +85,9 @@ async function refreshSessionData () {
   })
 
   document.getElementById('loadingSpinner').classList.add('hidden')
+
+  let nextFeedingTime = new Date(new Date(sessions[sessions.length - 1].time).getTime() + 240 * 60000)
+  document.getElementById('feedingTime').innerHTML = formatDateToLocalTime(nextFeedingTime)
 }
 
 function fetchSessions () {
@@ -157,7 +158,6 @@ function showSessionModal (sessionId) {
 }
 
 function formatDateToLocalTime (dateString) {
-  console.log(dateString)
   let date = new Date(Date.parse(dateString))
 
   return `${date.getDate().toString().padStart(2, '0')}.${(date.getMonth() + 1).toString().padStart(2, '0')}.${date.getFullYear()}, ${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}`
