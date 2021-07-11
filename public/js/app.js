@@ -77,6 +77,8 @@ function addSessionToList (session) {
 async function refreshSessionData () {
   document.getElementById('sessionList').innerHTML = ''
   document.getElementById('loadingSpinner').classList.remove('hidden')
+  document.getElementById('feedingTime').innerHTML = ''
+  document.getElementById('nextFeedingLoadingSpinner').classList.remove('hidden')
 
   await fetchSessions()
 
@@ -85,6 +87,7 @@ async function refreshSessionData () {
   })
 
   document.getElementById('loadingSpinner').classList.add('hidden')
+  document.getElementById('nextFeedingLoadingSpinner').classList.add('hidden')
 
   let nextFeedingTime = new Date(new Date(sessions[sessions.length - 1].time).getTime() + 240 * 60000)
   document.getElementById('feedingTime').innerHTML = formatDateToLocalTime(nextFeedingTime)

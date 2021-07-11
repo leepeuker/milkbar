@@ -10,15 +10,16 @@
         <button class="btn btn-lg btn-primary" type="button" id="addNursingTime" style="padding: 1rem 1rem">Add session</button>
     </div>
     <hr>
-    <p>Next feeding at: <span id="feedingTime" class="fw-bold"></span></p>
+    <div>
+        <p class="text-center" style="margin-bottom: .2rem">Next booby party not later then</p>
+        <img class="mx-auto d-block" src="ajax-loader.gif" id="nextFeedingLoadingSpinner">
+        <p id="feedingTime" class="fw-bold fs-3 text-center"></p>
+    </div>
     <hr>
+    <p>Sessions:</p>
     <ul class="list-group" id="sessionList"></ul>
     <br>
     <img class="mx-auto d-block" src="ajax-loader.gif" id="loadingSpinner">
-    <nav>
-        <ul class="pagination float-left" id="pagination"></ul>
-        <div class="float-right" style="padding-top:0.5em;"><small id="pageInfo"></small></div>
-    </nav>
 
     {{ include('modal.html') }}
 {% endblock %}
