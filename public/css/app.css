@@ -1,0 +1,11 @@
+.list-group-item-main {
+    cursor: pointer;
+}
+
+.hidden {
+    display: none !important;
+}
+
+li:hover {
+    background-color: yellow;
+}

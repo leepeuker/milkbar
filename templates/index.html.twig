@@ -5,9 +5,16 @@
 {% endblock %}
 
 {% block body %}
-    <h1>Nursing log</h1>
-    <button type="button" class="btn btn-lg btn-primary" id="addNursingTime">Add nursing time</button>
-    <br>
+    <h1 class="text-center" style="padding-top: 1rem;padding-bottom: 0.5rem">Nursing log</h1>
+    <div class="d-grid">
+        <button class="btn btn-lg btn-primary" type="button" id="addNursingTime" style="padding: 1rem 1rem">Add session</button>
+    </div>
     <hr>
     <ul class="list-group" id="sessionList"></ul>
+    <br>
+    <img class="mx-auto d-block" src="ajax-loader.gif" id="loadingSpinner">
+    <nav>
+        <ul class="pagination float-left" id="pagination"></ul>
+        <div class="float-right" style="padding-top:0.5em;"><small id="pageInfo"></small></div>
+    </nav>
 {% endblock %}
