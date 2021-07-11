@@ -16,9 +16,9 @@ class Session
         $this->repository = $repository;
     }
 
-    public function delete(array $parameters) : void
+    public function delete(array $routeParameters) : void
     {
-        $this->repository->delete(Uuid::createFromString($parameters['id']));
+        $this->repository->delete(Uuid::createFromString($routeParameters['id']));
     }
 
     public function get() : void
@@ -33,5 +33,18 @@ class Session
         $this->repository->create($session);
 
         echo json_encode($session, JSON_THROW_ON_ERROR);
+    }
+
+    public function put(array $routeParameters) : void
+    {
+        $body = (string)file_get_contents('php://input');
+        $requestData = json_decode($body, true, 512, JSON_THROW_ON_ERROR);
+
+        $this->repository->update(
+            Entity::createFromParameters(
+                Uuid::createFromString($routeParameters['id']),
+                DateTime::createFromString($requestData['time'])
+            )
+        );
     }
 }

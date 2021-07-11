@@ -8,7 +8,9 @@ interface Repository
 {
     public function create(Entity $session) : void;
 
-    public function delete(Uuid $sessionId);
+    public function delete(Uuid $sessionId) : void;
 
     public function fetchAll() : EntityList;
+
+    public function update(Entity $session) : void;
 }

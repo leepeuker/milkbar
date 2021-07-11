@@ -23,4 +23,9 @@ return static function(FastRoute\RouteCollector $routeCollector) {
         '/api/session/{id:.+}',
         [Controller\Session::class, 'delete']
     );
+    $routeCollector->addRoute(
+        'PUT',
+        '/api/session/{id:.+}',
+        [Controller\Session::class, 'put']
+    );
 };

@@ -15,3 +15,11 @@ Accept: */*
 Cache-Control: no-cache
 
 ###
+
+PUT http://127.0.0.1:8877/api/session/87c28595-8ac3-4ca9-acc4-133c343001df
+Accept: */*
+Cache-Control: no-cache
+
+{"time":"11.7.2021, 16:18"}
+
+###

@@ -36,11 +36,23 @@ class Session implements Repository
         );
     }
 
-    public
-    function fetchAll() : EntityList
+    public function fetchAll() : EntityList
     {
         $data = $this->dbConnection->fetchAllAssociative('SELECT * FROM `session` ORDER BY time ASC');
 
         return EntityList::createFromArray($data);
+    }
+
+    public function update(Entity $session) : void
+    {
+        $this->dbConnection->update(
+            'session',
+            [
+                'time' => (string)$session->getTime(),
+            ],
+            [
+                'id' => (string)$session->getId(),
+            ]
+        );
     }
 }

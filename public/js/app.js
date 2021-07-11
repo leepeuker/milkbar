@@ -14,6 +14,19 @@ document.addEventListener('DOMContentLoaded', async function () {
   document.getElementById('deleteButton').addEventListener('click', function (event) {
     deleteData('/api/session/' + document.getElementById('sessionIdModalInput').value).then(session => refreshSessionData())
   })
+
+  document.getElementById('updateButton').addEventListener('click', function (event) {
+
+    var matches = document.getElementById('sessionTimeModalInput').value.match(/(\d{1,2})\.(\d{1,2})\.(\d{4}), (\d{2}):(\d{2})/)
+    let date = new Date(`${matches[3]}-${matches[2].padStart(2, '0')}-${matches[1].padStart(2, '0')} ${matches[4]}:${matches[5]}`)
+
+    putData(
+      '/api/session/' + document.getElementById('sessionIdModalInput').value,
+      {
+        'time': date.toISOString()
+      }
+    ).then(session => refreshSessionData())
+  })
 })
 
 function resetSessionModal () {
@@ -72,6 +85,17 @@ async function postData (url, data = {}) {
   return response.json()
 }
 
+async function putData (url, data = {}) {
+  await fetch(url, {
+    method: 'PUT',
+    cache: 'no-cache',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
+  })
+}
+
 async function deleteData (url) {
   await fetch(url, {
     method: 'DELETE',
@@ -90,9 +114,8 @@ function showSessionModal (sessionId) {
 }
 
 function formatDateToLocalTime (dateString) {
+  console.log(dateString)
   let date = new Date(Date.parse(dateString))
 
-  let formattedDateTimeString = date.toLocaleString('de-DE')
-
-  return formattedDateTimeString.substring(0, formattedDateTimeString.length - 3)
+  return `${date.getDate().toString().padStart(2, '0')}.${(date.getMonth() + 1).toString().padStart(2, '0')}.${date.getFullYear()}, ${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}`
 }
