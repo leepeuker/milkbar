@@ -23,6 +23,10 @@ document.addEventListener('DOMContentLoaded', async function () {
     }
   })
 
+  document.getElementById('sessionMaxAge').addEventListener('click', function (event) {
+    refreshSessionData()
+  })
+
   document.getElementById('rightBoob').addEventListener('click', function (event) {
     document.getElementById('minutesRightInput').disabled = this.checked === false
 
@@ -94,7 +98,7 @@ async function refreshSessionData () {
 }
 
 function fetchSessions () {
-  return fetchData('/api/session')
+  return fetchData('/api/session?maxAge=' + document.getElementById('sessionMaxAge').value)
     .then((sessionData) => {
       sessions = sessionData
     })

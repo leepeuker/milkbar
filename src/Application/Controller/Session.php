@@ -23,7 +23,9 @@ class Session
 
     public function get() : void
     {
-        echo json_encode($this->repository->fetchAll(), JSON_THROW_ON_ERROR);
+        $maxAge = (int)$_GET['maxAge'];
+
+        echo json_encode($this->repository->fetchAllInTimeframe($maxAge), JSON_THROW_ON_ERROR);
     }
 
     public function post() : void

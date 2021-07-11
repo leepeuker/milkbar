@@ -16,10 +16,20 @@
         <p id="feedingTime" class="fw-bold fs-3 text-center"></p>
     </div>
     <hr>
-    <p>Sessions:</p>
+    <div class="mb-3 row">
+        <div class="col-sm-16">
+            <select class="form-select" aria-label="Default select example" id="sessionMaxAge">
+                <option value="24" selected>1 Day</option>
+                <option value="48">2 Days</option>
+                <option value="72">3 Days</option>
+                <option value="86">4 Days</option>
+                <option value="110">5 Days</option>
+            </select>
+        </div>
+    </div>
     <ul class="list-group" id="sessionList"></ul>
-    <br>
     <img class="mx-auto d-block" src="ajax-loader.gif" id="loadingSpinner">
+    <br>
 
     {{ include('modal.html') }}
 {% endblock %}
