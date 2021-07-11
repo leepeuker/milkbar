@@ -3,6 +3,7 @@
 namespace NursingLog;
 
 use Doctrine\DBAL;
+use NursingLog\Domain\ValueObject\Request;
 use NursingLog\Infrastructure\Config;
 use Twig;
 
@@ -11,6 +12,11 @@ class Factory
     public static function createConfig() : Config
     {
         return Config::createFromFile(__DIR__ . '/../settings/config.ini');
+    }
+
+    public static function createCurrentHttpRequest() : Request
+    {
+        return Request::createFromGlobals();
     }
 
     public static function createDbConnection(Config $config) : DBAL\Connection

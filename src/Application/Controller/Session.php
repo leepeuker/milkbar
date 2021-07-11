@@ -5,6 +5,7 @@ namespace NursingLog\Application\Controller;
 use NursingLog\Domain\Session\Entity;
 use NursingLog\Domain\Session\Repository;
 use NursingLog\Domain\ValueObject\DateTime;
+use NursingLog\Domain\ValueObject\Request;
 use NursingLog\Domain\ValueObject\Uuid;
 
 class Session
@@ -21,9 +22,9 @@ class Session
         $this->repository->delete(Uuid::createFromString($routeParameters['id']));
     }
 
-    public function get() : void
+    public function get(Request $request) : void
     {
-        $maxAge = (int)$_GET['maxAge'];
+        $maxAge = (int)$request->getGetParameters()['maxAge'];
 
         echo json_encode($this->repository->fetchAllInTimeframe($maxAge), JSON_THROW_ON_ERROR);
     }
@@ -37,14 +38,13 @@ class Session
         echo json_encode($session, JSON_THROW_ON_ERROR);
     }
 
-    public function put(array $routeParameters) : void
+    public function put(Request $request) : void
     {
-        $body = (string)file_get_contents('php://input');
-        $requestData = json_decode($body, true, 512, JSON_THROW_ON_ERROR);
+        $requestData = json_decode($request->getBody(), true, 512, JSON_THROW_ON_ERROR);
 
         $this->repository->update(
             Entity::createFromParameters(
-                Uuid::createFromString($routeParameters['id']),
+                Uuid::createFromString($request->getRouteParameters()['id']),
                 DateTime::createFromString($requestData['time']),
                 empty($requestData['minutesLeft']) === true ? null : (int)$requestData['minutesLeft'],
                 empty($requestData['minutesRight']) === true ? null : (int)$requestData['minutesRight'],

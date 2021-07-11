@@ -12,6 +12,7 @@ $builder->addDefinitions(
         \Twig\Loader\LoaderInterface::class => DI\factory([Factory::class, 'createTwigFilesystemLoader']),
         \NursingLog\Domain\Session\Repository::class => DI\get(\NursingLog\Application\Repository\Session::class),
         \Doctrine\DBAL\Connection::class => DI\factory([Factory::class, 'createDbConnection']),
+        \NursingLog\Domain\ValueObject\Request::class => DI\factory([Factory::class, 'createCurrentHttpRequest']),
     ]
 );
 

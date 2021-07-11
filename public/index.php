@@ -2,6 +2,7 @@
 
 /** @var DI\Container $container */
 $container = require(__DIR__ . '/../bootstrap.php');
+$httpRequest = $container->get(\NursingLog\Domain\ValueObject\Request::class);
 
 $dispatcher = FastRoute\simpleDispatcher(
     require(__DIR__ . '/../settings/routes.php')
@@ -25,6 +26,7 @@ switch ($routeInfo[0]) {
         break;
     case FastRoute\Dispatcher::FOUND:
         $handler = $routeInfo[1];
-        $response = $container->call($handler, [$routeInfo[2]]);
+        $httpRequest->addRouteParameters($routeInfo[2]);
+        $response = $container->call($handler, [$httpRequest]);
         break;
 }
