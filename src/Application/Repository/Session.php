@@ -37,9 +37,15 @@ class Session implements Repository
         );
     }
 
-    public function fetchAllInTimeframe(int $hours) : EntityList
+    public function fetchAllInTimeframe(int $hours, int $userId) : EntityList
     {
-        $data = $this->dbConnection->fetchAllAssociative('SELECT * FROM `session` WHERE HOUR(TIMEDIFF(NOW(), time)) < ? ORDER BY time ASC', [$hours]);
+        $data = $this->dbConnection->fetchAllAssociative(
+            'SELECT * FROM `session` WHERE HOUR(TIMEDIFF(NOW(), time)) < ? AND user_id = ? ORDER BY time ASC',
+            [
+                $hours,
+                $userId,
+            ]
+        );
 
         return EntityList::createFromArray($data);
     }
