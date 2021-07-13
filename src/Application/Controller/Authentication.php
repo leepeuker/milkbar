@@ -2,23 +2,23 @@
 
 namespace NursingLog\Application\Controller;
 
+use NursingLog\Application\Service\User;
 use NursingLog\Domain\ValueObject\Request;
-use NursingLog\Application\Service;
 use Twig\Environment;
 
-class Login
+class Authentication
 {
     private Environment $twig;
 
-    private Service\User\Login $userLoginService;
+    private User\Login $userLoginService;
 
-    public function __construct(Environment $twig, Service\User\Login $userLoginService)
+    public function __construct(Environment $twig, User\Login $userLoginService)
     {
         $this->twig = $twig;
         $this->userLoginService = $userLoginService;
     }
 
-    public function authenticate(Request $request) : void
+    public function login(Request $request) : void
     {
         if (isset($_SESSION['user']) === true) {
             header('Location: /dashboard');
@@ -27,16 +27,17 @@ class Login
         try {
             $this->userLoginService->authenticate(
                 $request->getPostParameters()['email'],
-                $request->getPostParameters()['password']
+                $request->getPostParameters()['password'],
+                isset($request->getPostParameters()['rememberMe']) === true
             );
-        } catch (Service\User\Exception\InvalidCredentials $e) {
+        } catch (User\Exception\InvalidCredentials $e) {
             $_SESSION['failedLogin'] = true;
         }
 
         header('Location: /dashboard');
     }
 
-    public function destroy() : void
+    public function logout() : void
     {
         unset($_SESSION['user']);
         session_regenerate_id();
@@ -44,7 +45,7 @@ class Login
         header('Location: /');
     }
 
-    public function get() : void
+    public function renderLoginPage() : void
     {
         if (isset($_SESSION['user']) === true) {
             header('Location: /dashboard');
