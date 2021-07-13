@@ -10,6 +10,16 @@ return static function(FastRoute\RouteCollector $routeCollector) {
     );
     $routeCollector->addRoute(
         'GET',
+        '/logout',
+        [Controller\Login::class, 'destroy']
+    );
+    $routeCollector->addRoute(
+        'POST',
+        '/login',
+        [Controller\Login::class, 'authenticate']
+    );
+    $routeCollector->addRoute(
+        'GET',
         '/dashboard',
         [Controller\Dashboard::class, 'get']
     );

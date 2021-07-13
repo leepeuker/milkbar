@@ -1,5 +1,7 @@
 <?php
 
+session_start();
+
 /** @var DI\Container $container */
 $container = require(__DIR__ . '/../bootstrap.php');
 $httpRequest = $container->get(\NursingLog\Domain\ValueObject\Request::class);

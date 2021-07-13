@@ -23,6 +23,7 @@ class Session implements Repository
             'session',
             [
                 'id' => (string)$session->getId(),
+                'user_id' => $session->getUserId() === null ? null : (string)$session->getUserId(),
                 'time' => (string)$session->getTime(),
             ]
         );

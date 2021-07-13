@@ -15,17 +15,20 @@ class Entity implements \JsonSerializable
 
     private DateTime $sessionTime;
 
-    private function __construct(Uuid $id, DateTime $sessionTime, ?int $minutesLeft, ?int $minutesRight)
+    private ?int $userId;
+
+    private function __construct(Uuid $id, ?int $userId, DateTime $sessionTime, ?int $minutesLeft, ?int $minutesRight)
     {
         $this->id = $id;
+        $this->userId = $userId;
         $this->sessionTime = $sessionTime;
         $this->minutesLeft = $minutesLeft;
         $this->minutesRight = $minutesRight;
     }
 
-    public static function createFromParameters(Uuid $id, DateTime $sessionTime, ?int $minutesLeft, ?int $minutesRight) : self
+    public static function createFromParameters(Uuid $id, ?int $userId, DateTime $sessionTime, ?int $minutesLeft, ?int $minutesRight) : self
     {
-        return new self($id, $sessionTime, $minutesLeft, $minutesRight);
+        return new self($id, $userId, $sessionTime, $minutesLeft, $minutesRight);
     }
 
     public function getId() : Uuid
@@ -48,10 +51,16 @@ class Entity implements \JsonSerializable
         return $this->sessionTime;
     }
 
+    public function getUserId() : ?int
+    {
+        return $this->userId;
+    }
+
     public function jsonSerialize() : array
     {
         return [
             'id' => $this->id,
+            'userId' => $this->userId,
             'time' => $this->sessionTime->format(DATE_RFC2822),
             'minutesLeft' => $this->minutesLeft,
             'minutesRight' => $this->minutesRight,

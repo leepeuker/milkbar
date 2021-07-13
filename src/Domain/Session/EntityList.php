@@ -16,6 +16,7 @@ class EntityList extends AbstractList
             $entities->add(
                 Entity::createFromParameters(
                     Uuid::createFromString($entityData['id']),
+                    $entityData['user_id'] === null ? null : (int)$entityData['user_id'],
                     DateTime::createFromString($entityData['time']),
                     empty($entityData['minutesLeft']) === true ? null : (int)$entityData['minutesLeft'],
                     empty($entityData['minutesRight']) === true ? null : (int)$entityData['minutesRight'],
