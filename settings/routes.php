@@ -6,7 +6,12 @@ return static function(FastRoute\RouteCollector $routeCollector) {
     $routeCollector->addRoute(
         'GET',
         '/',
-        [Controller\Index::class, 'get']
+        [Controller\Login::class, 'get']
+    );
+    $routeCollector->addRoute(
+        'GET',
+        '/dashboard',
+        [Controller\Dashboard::class, 'get']
     );
     $routeCollector->addRoute(
         'POST',

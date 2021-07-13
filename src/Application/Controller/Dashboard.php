@@ -4,7 +4,7 @@ namespace NursingLog\Application\Controller;
 
 use Twig\Environment;
 
-class Index
+class Dashboard
 {
     private Environment $twig;
 
@@ -15,6 +15,6 @@ class Index
 
     public function get() : void
     {
-        echo $this->twig->render('index.html.twig');
+        echo $this->twig->render('dashboard.html.twig');
     }
 }
