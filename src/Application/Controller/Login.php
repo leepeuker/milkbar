@@ -29,7 +29,9 @@ class Login
                 $request->getPostParameters()['email'],
                 $request->getPostParameters()['password']
             );
-        } catch (\Throwable $t) {}
+        } catch (Service\User\Exception\InvalidCredentials $e) {
+            $_SESSION['failedLogin'] = true;
+        }
 
         header('Location: /dashboard');
     }
@@ -48,6 +50,8 @@ class Login
             header('Location: /dashboard');
         }
 
-        echo $this->twig->render('login.html.twig');
+        echo $this->twig->render('login.html.twig', ['failedLogin' => isset($_SESSION['failedLogin'])]);
+
+        unset($_SESSION['failedLogin']);
     }
 }

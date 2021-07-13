@@ -24,8 +24,13 @@
             <input type="password" name="password" class="form-control" id="floatingPassword" placeholder="Password" required>
             <label for="floatingPassword">Password</label>
         </div>
+        {% if failedLogin == true %}
+            <div class="alert alert-danger" role="alert" style="margin-bottom: 0.5rem!important;">
+                Invalid login credentials
+            </div>
+        {% endif %}
 
-        <div class="checkbox mb-3">
+        <div class="checkbox mb-3" style="margin-bottom: 0.5rem!important;">
             <label>
                 <input type="checkbox" value="remember-me"> Remember me
             </label>
