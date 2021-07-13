@@ -2,6 +2,7 @@
 
 namespace NursingLog\Application\Service\User;
 
+use NursingLog\Application\Service\User\Exception\InvalidCredentials;
 use NursingLog\Domain\User\Repository;
 
 class Login
@@ -17,12 +18,8 @@ class Login
     {
         $user = $this->userRepository->findUserByEmail($email);
 
-        if ($user === null) {
-            throw new \RuntimeException('User does not exist.');
-        }
-
-        if (password_verify($password, $user->getPasswordHash()) === false) {
-            throw new \RuntimeException('Invalid password provided.');
+        if ($user === null || password_verify($password, $user->getPasswordHash()) === false) {
+            throw InvalidCredentials::create($email);
         }
 
         session_regenerate_id();
