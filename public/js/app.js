@@ -102,8 +102,12 @@ async function refreshSessionData () {
   document.getElementById('loadingSpinner').classList.add('hidden')
   document.getElementById('nextFeedingLoadingSpinner').classList.add('hidden')
 
-  let nextFeedingTime = new Date(new Date(sessions[sessions.length - 1].time).getTime() + 240 * 60000)
-  document.getElementById('feedingTime').innerHTML = formatDateToLocalTime(nextFeedingTime)
+  if (sessions.length > 0) {
+    let nextFeedingTime = new Date(new Date(sessions[sessions.length - 1].time).getTime() + 240 * 60000)
+    document.getElementById('feedingTime').innerHTML = formatDateToLocalTime(nextFeedingTime)
+  } else {
+    document.getElementById('feedingTime').innerHTML = '---'
+  }
 }
 
 function fetchSessions () {
