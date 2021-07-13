@@ -15,6 +15,10 @@ class Dashboard
 
     public function get() : void
     {
+        if (isset($_SESSION['user']) === false) {
+            header('Location: /');
+        }
+
         echo $this->twig->render('dashboard.html.twig');
     }
 }

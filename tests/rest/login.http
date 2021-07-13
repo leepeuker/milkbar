@@ -1,0 +1,8 @@
+POST http://127.0.0.1:8877/login
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/x-www-form-urlencoded
+
+email=lee.peuker@protonmail.com&password=schweini1.1
+
+###
