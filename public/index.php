@@ -1,6 +1,10 @@
 <?php
 
-session_start();
+session_start(
+    [
+        'cookie_lifetime' => 604800,
+    ]
+);
 
 /** @var DI\Container $container */
 $container = require(__DIR__ . '/../bootstrap.php');
