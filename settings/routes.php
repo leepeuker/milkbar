@@ -6,17 +6,17 @@ return static function(FastRoute\RouteCollector $routeCollector) {
     $routeCollector->addRoute(
         'GET',
         '/',
-        [Controller\Login::class, 'get']
+        [Controller\Authentication::class, 'renderLoginPage']
     );
     $routeCollector->addRoute(
         'GET',
         '/logout',
-        [Controller\Login::class, 'destroy']
+        [Controller\Authentication::class, 'logout']
     );
     $routeCollector->addRoute(
         'POST',
         '/login',
-        [Controller\Login::class, 'authenticate']
+        [Controller\Authentication::class, 'login']
     );
     $routeCollector->addRoute(
         'GET',
