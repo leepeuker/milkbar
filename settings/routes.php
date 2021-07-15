@@ -20,6 +20,16 @@ return static function(FastRoute\RouteCollector $routeCollector) {
     );
     $routeCollector->addRoute(
         'GET',
+        '/settings',
+        [Controller\Settings::class, 'renderPage']
+    );
+    $routeCollector->addRoute(
+        'POST',
+        '/settings',
+        [Controller\Settings::class, 'update']
+    );
+    $routeCollector->addRoute(
+        'GET',
         '/dashboard',
         [Controller\Dashboard::class, 'get']
     );

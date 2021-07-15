@@ -10,11 +10,14 @@ class Entity
 
     private string $passwordHash;
 
-    private function __construct(int $id, string $email, string $passwordHash)
+    private int $timeUntilNextMeal;
+
+    private function __construct(int $id, string $email, string $passwordHash, int $timeUntilNextMeal)
     {
         $this->id = $id;
         $this->email = $email;
         $this->passwordHash = $passwordHash;
+        $this->timeUntilNextMeal = $timeUntilNextMeal;
     }
 
     public static function createFromArray(array $data) : self
@@ -22,7 +25,8 @@ class Entity
         return new self(
             (int)$data['id'],
             $data['email'],
-            $data['password']
+            $data['password'],
+            (int)$data['timeUntilNextMeal'],
         );
     }
 
@@ -39,5 +43,10 @@ class Entity
     public function getPasswordHash() : string
     {
         return $this->passwordHash;
+    }
+
+    public function getTimeUntilNextMeal() : int
+    {
+        return $this->timeUntilNextMeal;
     }
 }

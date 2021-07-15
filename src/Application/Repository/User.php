@@ -25,4 +25,28 @@ class User implements Repository
 
         return Entity::createFromArray($data[0]);
     }
+
+    public function findUserById(int $userId) : ?Entity
+    {
+        $data = $this->dbConnection->fetchAllAssociative('SELECT * FROM `user` WHERE `id` = ?', [$userId]);
+
+        if (count($data) === 0) {
+            return null;
+        }
+
+        return Entity::createFromArray($data[0]);
+    }
+
+    public function updateTimeUntilNextMeal(int $userId, int $timeUntilNextMeal) : void
+    {
+        $this->dbConnection->update(
+            'user',
+            [
+                'timeUntilNextMeal' => $timeUntilNextMeal,
+            ],
+            [
+                'id' => $userId,
+            ]
+        );
+    }
 }
