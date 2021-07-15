@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Milkbar - Settings
+{% endblock %}
+
+{% block body %}
+    {{ include('navbar.html') }}
+
+    <main role="main" class="container" style="padding-top: 1rem">
+        <form method="POST" action="/settings">
+            <div class="mb-3">
+                <label for="timeUntilNextMeal" class="col-sm-2 col-form-label">Time until next meal</label>
+                <input type="number" step="1" min="1" class="form-control" id="timeUntilNextMeal" name="timeUntilNextMeal" value="{{ timeUntilNextMeal }}" required>
+                <div id="emailHelp" class="form-text">Unit of measurement: hours</div>
+            </div>
+            <button type="submit" class="btn btn-primary">Save</button>
+        </form>
+    </main>
+{% endblock %}

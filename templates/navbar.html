@@ -1,7 +1,14 @@
 <nav class="navbar navbar-light bg-light">
     <div class="container">
-        <a class="navbar-brand" href="#">Nursing Log</a>
-<!--        <a class="btn btn-outline-dark" href="/logout" style="margin-right: 0.5rem">Settings</a>-->
-        <a class="btn btn-outline-dark" href="/logout"><img src="/images/icon-logout-64x64.png" height="18rem"></a>
+        <a class="navbar-brand" href="/">Milkbar</a>
+        <div class="btn-group">
+            <button type="button" class="btn" data-bs-toggle="dropdown" aria-expanded="false">
+                <img src="/images/icon-menu.png" height="18rem">
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end">
+                <li><a class="dropdown-item" href="/settings">Settings</a></li>
+                <li><a class="dropdown-item" href="/logout">Logout</a></li>
+            </ul>
+        </div>
     </div>
 </nav>
