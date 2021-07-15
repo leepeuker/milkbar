@@ -1,6 +1,6 @@
 {
   "name": "Milkbar",
-  "short_name": "milkbar",
+  "short_name": "Milkbar",
   "lang": "en-US",
   "start_url": "/dashboard",
   "display": "standalone",
