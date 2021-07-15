@@ -1,6 +1,6 @@
 [database]
 driver = "pdo_mysql"
-host = "nursing-log-mysql"
+host = "milkbar-mysql"
 name = "nursing_log"
 username = "nursing_log"
 password = "nursing_log"

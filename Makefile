@@ -16,21 +16,21 @@ down:
 reup: down up
 
 connect_php_bash:
-	docker exec -it nursing-log-php bash
+	docker exec -it milkbar-php bash
 
 run_cmd_php:
-	docker exec -i nursing-log-php bash -c "${CMD}"
+	docker exec -i milkbar-php bash -c "${CMD}"
 
 run_cmd_mysql:
-	docker exec -it nursing-log-mysql bash -c "mysql -uroot -p${MYSQL_ROOT_PASSWORD} -e \"$(QUERY)\""
+	docker exec -it milkbar-mysql bash -c "mysql -uroot -p${MYSQL_ROOT_PASSWORD} -e \"$(QUERY)\""
 
 # Composer
 ##########
 composer_install:
-	docker exec nursing-log-php bash -c "composer install"
+	docker exec milkbar-php bash -c "composer install"
 
 composer_update:
-	docker exec nursing-log-php bash -c "composer update"
+	docker exec milkbar-php bash -c "composer update"
 
 # Database
 ##########
@@ -51,14 +51,14 @@ db_migration_create:
 	make run_cmd_php CMD="vendor/bin/phinx create Migration -c ./settings/phinx.php"
 
 db_import:
-	docker cp $(FILE) nursing-log-mysql:/tmp/dump.sql
-	docker exec nursing-log-mysql bash -c 'mysql -uroot -p${MYSQL_ROOT_PASSWORD} < /tmp/dump.sql'
-	docker exec nursing-log-mysql bash -c 'rm /tmp/dump.sql'
+	docker cp $(FILE) milkbar-mysql:/tmp/dump.sql
+	docker exec milkbar-mysql bash -c 'mysql -uroot -p${MYSQL_ROOT_PASSWORD} < /tmp/dump.sql'
+	docker exec milkbar-mysql bash -c 'rm /tmp/dump.sql'
 
 db_export:
-	docker exec nursing-log-mysql bash -c 'mysqldump --databases --no-tablespaces --add-drop-database -u$(DB_USER) -p$(DB_PASSWORD) $(DB_NAME) > /tmp/dump.sql'
-	docker cp nursing-log-mysql:/tmp/dump.sql tmp/nursing-log-`date +%Y-%m-%d-%H-%M-%S`.sql
-	docker exec nursing-log-mysql bash -c 'rm /tmp/dump.sql'
+	docker exec milkbar-mysql bash -c 'mysqldump --databases --no-tablespaces --add-drop-database -u$(DB_USER) -p$(DB_PASSWORD) $(DB_NAME) > /tmp/dump.sql'
+	docker cp milkbar-mysql:/tmp/dump.sql tmp/milkbar-`date +%Y-%m-%d-%H-%M-%S`.sql
+	docker exec milkbar-mysql bash -c 'rm /tmp/dump.sql'
 
 # Tests
 #######

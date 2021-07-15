@@ -1,4 +1,4 @@
-var staticDevCoffee = 'nursing-log';
+var staticDevCoffee = 'milkbar';
 var assets = [
   '/',
   '/index.php',
