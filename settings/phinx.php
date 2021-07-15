@@ -3,7 +3,7 @@
 /** @var DI\Container $container */
 $container = require(__DIR__ . '/../bootstrap.php');
 
-$config = $container->get(\NursingLog\Infrastructure\Config::class);
+$config = $container->get(\Milkbar\Infrastructure\Config::class);
 
 return [
     'paths' => [

@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace NursingLog\Application\Controller;
+namespace Milkbar\Application\Controller;
 
 use Twig\Environment;
 

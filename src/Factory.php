@@ -1,10 +1,10 @@
 <?php declare(strict_types=1);
 
-namespace NursingLog;
+namespace Milkbar;
 
 use Doctrine\DBAL;
-use NursingLog\Domain\ValueObject\Request;
-use NursingLog\Infrastructure\Config;
+use Milkbar\Domain\ValueObject\Request;
+use Milkbar\Infrastructure\Config;
 use Twig;
 
 class Factory

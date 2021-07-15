@@ -1,10 +1,10 @@
 <?php declare(strict_types=1);
 
-namespace NursingLog\Application\Repository;
+namespace Milkbar\Application\Repository;
 
 use Doctrine\DBAL\Connection;
-use NursingLog\Domain\User\Entity;
-use NursingLog\Domain\User\Repository;
+use Milkbar\Domain\User\Entity;
+use Milkbar\Domain\User\Repository;
 
 class User implements Repository
 {

@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace NursingLog\Application\Service\User\Exception;
+namespace Milkbar\Application\Service\User\Exception;
 
 class InvalidCredentials extends \RuntimeException
 {
