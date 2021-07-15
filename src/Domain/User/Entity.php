@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace NursingLog\Domain\User;
+namespace Milkbar\Domain\User;
 
 class Entity
 {

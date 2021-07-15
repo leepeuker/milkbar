@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace NursingLog\Domain\ValueObject;
+namespace Milkbar\Domain\ValueObject;
 
 /**
  * @template TValue

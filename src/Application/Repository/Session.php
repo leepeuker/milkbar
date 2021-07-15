@@ -1,12 +1,12 @@
 <?php declare(strict_types=1);
 
-namespace NursingLog\Application\Repository;
+namespace Milkbar\Application\Repository;
 
 use Doctrine\DBAL\Connection;
-use NursingLog\Domain\Session\Entity;
-use NursingLog\Domain\Session\EntityList;
-use NursingLog\Domain\Session\Repository;
-use NursingLog\Domain\ValueObject\Uuid;
+use Milkbar\Domain\Session\Entity;
+use Milkbar\Domain\Session\EntityList;
+use Milkbar\Domain\Session\Repository;
+use Milkbar\Domain\ValueObject\Uuid;
 
 class Session implements Repository
 {

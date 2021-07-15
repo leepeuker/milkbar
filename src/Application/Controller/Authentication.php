@@ -1,9 +1,9 @@
 <?php declare(strict_types=1);
 
-namespace NursingLog\Application\Controller;
+namespace Milkbar\Application\Controller;
 
-use NursingLog\Application\Service\User;
-use NursingLog\Domain\ValueObject\Request;
+use Milkbar\Application\Service\User;
+use Milkbar\Domain\ValueObject\Request;
 use Twig\Environment;
 
 class Authentication

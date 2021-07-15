@@ -1,6 +1,6 @@
 {
-  "name": "Nursing Log",
-  "short_name": "nursing-log",
+  "name": "Milkbar",
+  "short_name": "milkbar",
   "lang": "en-US",
   "start_url": "/dashboard",
   "display": "standalone",

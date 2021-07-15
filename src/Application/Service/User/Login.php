@@ -1,9 +1,9 @@
 <?php declare(strict_types=1);
 
-namespace NursingLog\Application\Service\User;
+namespace Milkbar\Application\Service\User;
 
-use NursingLog\Application\Service\User\Exception\InvalidCredentials;
-use NursingLog\Domain\User\Repository;
+use Milkbar\Application\Service\User\Exception\InvalidCredentials;
+use Milkbar\Domain\User\Repository;
 
 class Login
 {

@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace NursingLog\Domain\Session;
+namespace Milkbar\Domain\Session;
 
-use NursingLog\Domain\ValueObject\Uuid;
+use Milkbar\Domain\ValueObject\Uuid;
 
 interface Repository
 {

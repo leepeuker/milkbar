@@ -1,12 +1,12 @@
 <?php declare(strict_types=1);
 
-namespace NursingLog\Application\Controller;
+namespace Milkbar\Application\Controller;
 
-use NursingLog\Domain\Session\Entity;
-use NursingLog\Domain\Session\Repository;
-use NursingLog\Domain\ValueObject\DateTime;
-use NursingLog\Domain\ValueObject\Request;
-use NursingLog\Domain\ValueObject\Uuid;
+use Milkbar\Domain\Session\Entity;
+use Milkbar\Domain\Session\Repository;
+use Milkbar\Domain\ValueObject\DateTime;
+use Milkbar\Domain\ValueObject\Request;
+use Milkbar\Domain\ValueObject\Uuid;
 
 class Session
 {

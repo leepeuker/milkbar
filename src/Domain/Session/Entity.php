@@ -1,9 +1,9 @@
 <?php declare(strict_types=1);
 
-namespace NursingLog\Domain\Session;
+namespace Milkbar\Domain\Session;
 
-use NursingLog\Domain\ValueObject\DateTime;
-use NursingLog\Domain\ValueObject\Uuid;
+use Milkbar\Domain\ValueObject\DateTime;
+use Milkbar\Domain\ValueObject\Uuid;
 
 class Entity implements \JsonSerializable
 {
