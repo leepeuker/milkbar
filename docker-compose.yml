@@ -1,9 +1,9 @@
 version: "3.5"
 
 services:
-  nursing-log-nginx:
+  milkbar-nginx:
     build: ./build/nginx/
-    container_name: nursing-log-nginx
+    container_name: milkbar-nginx
     restart: unless-stopped
     working_dir: /var/www/
     ports:
@@ -13,11 +13,11 @@ services:
       - ./build/nginx/nginx.conf:/etc/nginx/nginx.conf
       - ./:/var/www/
     depends_on:
-      - nursing-log-php
+      - milkbar-php
 
-  nursing-log-php:
+  milkbar-php:
     build: ./build/php
-    container_name: nursing-log-php
+    container_name: milkbar-php
     restart: unless-stopped
     working_dir: /var/www
     user: "${USER_ID}"
@@ -25,9 +25,9 @@ services:
       - ./:/var/www
       - ./build/php/php.ini:/usr/local/etc/php/php.ini
 
-  nursing-log-mysql:
+  milkbar-mysql:
     image: mysql:5.7
-    container_name: nursing-log-mysql
+    container_name: milkbar-mysql
     restart: unless-stopped
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
