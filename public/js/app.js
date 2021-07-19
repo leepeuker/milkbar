@@ -31,11 +31,15 @@ document.addEventListener('DOMContentLoaded', async function () {
   })
 
   document.getElementById('leftBoob').addEventListener('click', function (event) {
-    document.getElementById('minutesLeftInput').disabled = this.checked === false
-
     if (this.checked === false) {
       document.getElementById('minutesLeftInput').value = ''
+    } else {
+      event.preventDefault()
     }
+  })
+
+  document.getElementById('minutesLeftInput').addEventListener('change', function (event) {
+    document.getElementById('leftBoob').checked = true
   })
 
   document.getElementById('sessionMaxAge').addEventListener('change', function (event) {
@@ -43,10 +47,10 @@ document.addEventListener('DOMContentLoaded', async function () {
   })
 
   document.getElementById('rightBoob').addEventListener('click', function (event) {
-    document.getElementById('minutesRightInput').disabled = this.checked === false
-
     if (this.checked === false) {
       document.getElementById('minutesRightInput').value = ''
+    } else {
+      event.preventDefault()
     }
   })
 
@@ -72,10 +76,8 @@ function resetSessionModal () {
   document.getElementById('sessionTimeModalInput').value = null
   document.getElementById('leftBoob').checked = false
   document.getElementById('minutesLeftInput').value = ''
-  document.getElementById('minutesLeftInput').disabled = true
   document.getElementById('rightBoob').checked = false
   document.getElementById('minutesRightInput').value = ''
-  document.getElementById('minutesRightInput').disabled = true
 }
 
 function addSessionToList (session) {
@@ -180,13 +182,11 @@ function showSessionModal (sessionId) {
   let minutesLeft = parseInt(document.getElementById(sessionId).getAttribute('minutesleft'))
   if (minutesLeft > 0) {
     document.getElementById('leftBoob').checked = true
-    document.getElementById('minutesLeftInput').disabled = false
     document.getElementById('minutesLeftInput').value = minutesLeft
   }
   let minutesRight = parseInt(document.getElementById(sessionId).getAttribute('minutesright'))
   if (minutesRight > 0) {
     document.getElementById('rightBoob').checked = true
-    document.getElementById('minutesRightInput').disabled = false
     document.getElementById('minutesRightInput').value = minutesRight
   }
 
