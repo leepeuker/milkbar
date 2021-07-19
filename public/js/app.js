@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     }
   })
 
-  document.getElementById('sessionMaxAge').addEventListener('click', function (event) {
+  document.getElementById('sessionMaxAge').addEventListener('change', function (event) {
     refreshSessionData()
   })
 
