@@ -2,7 +2,7 @@
   "name": "Milkbar",
   "short_name": "Milkbar",
   "lang": "en-US",
-  "start_url": "/",
+  "start_url": "/dashboard",
   "display": "standalone",
   "background_color": "white",
   "theme_color": "white",
