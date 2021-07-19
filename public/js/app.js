@@ -166,7 +166,8 @@ function showSessionModal (sessionId) {
       dateFormat: 'd.m.Y, H:i',
       altFormat: 'd.m.Y, H:i',
       time_24hr: true,
-      allowInput: true
+      allowInput: true,
+      minuteIncrement: 1
     }
   )
 
