@@ -61,7 +61,7 @@ class Entity implements \JsonSerializable
         return [
             'id' => $this->id,
             'userId' => $this->userId,
-            'time' => $this->sessionTime->format(DATE_RFC2822),
+            'time' => $this->sessionTime->format(DATE_ATOM),
             'minutesLeft' => $this->minutesLeft,
             'minutesRight' => $this->minutesRight,
         ];

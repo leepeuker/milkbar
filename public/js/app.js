@@ -90,6 +90,7 @@ function addSessionToList (session) {
   })
   li.setAttribute('minutesRight', session.minutesRight)
   li.setAttribute('minutesLeft', session.minutesLeft)
+  li.setAttribute('time', session.time)
   sessionList.prepend(li)
 }
 
@@ -162,7 +163,19 @@ async function deleteData (url) {
 
 function showSessionModal (sessionId) {
   document.getElementById('sessionIdModalInput').value = sessionId
-  document.getElementById('sessionTimeModalInput').value = document.getElementById(sessionId).innerText
+  document.getElementById('sessionTimeModalInput').value = formatDateToLocalTime(document.getElementById(sessionId).getAttribute('time'))
+
+  flatpickr.l10ns.default.firstDayOfWeek = 1
+  flatpickr('#sessionTimeModalInput', {
+      altInput: true,
+      enableTime: true,
+      dateFormat: 'd.m.Y, H:i',
+      altFormat: 'd.m.Y, H:i',
+      time_24hr: true,
+      allowInput: true,
+      minuteIncrement: 1
+    }
+  )
 
   let minutesLeft = parseInt(document.getElementById(sessionId).getAttribute('minutesleft'))
   if (minutesLeft > 0) {
