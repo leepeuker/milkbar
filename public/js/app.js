@@ -1,9 +1,9 @@
-if ("serviceWorker" in navigator) {
-  window.addEventListener("load", function() {
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', function () {
     navigator.serviceWorker
-      .register("/serviceWorker.js")
-      .then(res => console.log("service worker registered"))
-      .catch(err => console.log("service worker not registered", err))
+      .register('/serviceWorker.js')
+      .then(res => console.log('service worker registered'))
+      .catch(err => console.log('service worker not registered', err))
   })
 }
 
@@ -21,6 +21,12 @@ document.addEventListener('DOMContentLoaded', async function () {
   })
 
   document.getElementById('deleteButton').addEventListener('click', function (event) {
+    let deletionConfirmed = confirm('Are you sure you want to delete this session?')
+
+    if (deletionConfirmed === false) {
+      return
+    }
+
     deleteData('/api/session/' + document.getElementById('sessionIdModalInput').value).then(session => refreshSessionData())
   })
 
