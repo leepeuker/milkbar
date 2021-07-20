@@ -54,6 +54,10 @@ document.addEventListener('DOMContentLoaded', async function () {
     }
   })
 
+  document.getElementById('minutesRightInput').addEventListener('change', function (event) {
+    document.getElementById('rightBoob').checked = true
+  })
+
   document.getElementById('updateButton').addEventListener('click', function (event) {
     var matches = document.getElementById('sessionTimeModalInput').value.match(/(\d{1,2})\.(\d{1,2})\.(\d{4}), (\d{2}):(\d{2})/)
     let date = new Date(`${matches[3]}-${matches[2].padStart(2, '0')}-${matches[1].padStart(2, '0')} ${matches[4]}:${matches[5]}`)
