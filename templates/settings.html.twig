@@ -13,8 +13,26 @@
                 <label for="timeUntilNextMeal" class="col-sm-2 col-form-label">Time until next meal</label>
                 <input type="number" step="1" min="1" class="form-control" id="timeUntilNextMeal" name="timeUntilNextMeal" value="{{ timeUntilNextMeal }}" required>
                 <div id="emailHelp" class="form-text">Unit of measurement: hours</div>
+
+                    {% if updateSuccessful.timeUntilNextMeal == true %}
+                    <div class="alert alert-success" role="alert" style="margin-bottom: 0.7rem!important;margin-top: 0.5rem">
+                        Successfully updated
+                    </div>
+                {% endif %}
             </div>
-            <button type="submit" class="btn btn-primary">Save</button>
+            <hr>
+            <div class="mb-3">
+                <label for="passwordNew" class="col-sm-2 col-form-label">New password</label>
+                <input type="password" class="form-control" id="passwordNew" name="passwordNew">
+                <div id="passwordNewHelp" class="form-text">Leave empty for no changes</div>
+            </div>
+            <div class="mb-3">
+                <label for="passwordNewRepeat" class="col-form-label">Repeat new password</label>
+                <input type="password" class="form-control" id="passwordNewRepeat" name="passwordNewRepeat">
+            </div>
+            <hr>
+            <a type="submit" href="/settings/deleteAccount" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete your account?')">Delete Account</a>
+            <button type="submit" class="btn btn-primary float-end">Save</button>
         </form>
     </main>
 {% endblock %}

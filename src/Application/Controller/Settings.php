@@ -24,10 +24,19 @@ class Settings
             header('Location: /');
         }
 
+        $updateSuccessful = false;
+        if (isset($_SESSION['updateSuccessful']['timeUntilNextMeal']) === true) {
+            $updateSuccessful = $_SESSION['updateSuccessful']['timeUntilNextMeal'];
+            unset($_SESSION['updateSuccessful']['timeUntilNextMeal']);
+        }
+
         echo $this->twig->render(
             'settings.html.twig',
             [
                 'timeUntilNextMeal' => $this->userRepository->findUserById($_SESSION['user']['id'])->getTimeUntilNextMeal(),
+                'updateSuccessful' => [
+                    'timeUntilNextMeal' => $updateSuccessful,
+                ],
             ]
         );
     }
@@ -41,8 +50,13 @@ class Settings
         $userId = (int)$_SESSION['user']['id'];
         $timeUntilNextMeal = (int)$request->getPostParameters()['timeUntilNextMeal'];
 
-        $this->userRepository->updateTimeUntilNextMeal($userId, $timeUntilNextMeal);
-        $_SESSION['user']['timeUntilNextMeal'] = $timeUntilNextMeal;
+        if ($timeUntilNextMeal !== $this->userRepository->findUserById($userId)->getTimeUntilNextMeal()) {
+            $this->userRepository->updateTimeUntilNextMeal($userId, $timeUntilNextMeal);
+            $_SESSION['user']['timeUntilNextMeal'] = $timeUntilNextMeal;
+
+            $_SESSION['updateSuccessful']['timeUntilNextMeal'] = true;
+
+        }
 
         header('Location: /settings');
     }
