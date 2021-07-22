@@ -36,5 +36,6 @@ class Login
         session_regenerate_id();
 
         $_SESSION['user']['id'] = $user->getId();
+        $_SESSION['user']['timeUntilNextMeal'] = $user->getTimeUntilNextMeal();
     }
 }

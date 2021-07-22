@@ -42,6 +42,7 @@ class Settings
         $timeUntilNextMeal = (int)$request->getPostParameters()['timeUntilNextMeal'];
 
         $this->userRepository->updateTimeUntilNextMeal($userId, $timeUntilNextMeal);
+        $_SESSION['user']['timeUntilNextMeal'] = $timeUntilNextMeal;
 
         header('Location: /settings');
     }

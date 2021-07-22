@@ -116,7 +116,8 @@ async function refreshSessionData () {
   document.getElementById('nextFeedingLoadingSpinner').classList.add('hidden')
 
   if (sessions.length > 0) {
-    let nextFeedingTime = new Date(new Date(sessions[sessions.length - 1].time).getTime() + 240 * 60000)
+    let timeUntilNextMeal = document.getElementById('feedingTime').getAttribute('timeUntilNextMeal')
+    let nextFeedingTime = new Date(new Date(sessions[sessions.length - 1].time).getTime() + timeUntilNextMeal * 60 * 60000)
     document.getElementById('feedingTime').innerHTML = formatDateToLocalTime(nextFeedingTime)
   } else {
     document.getElementById('feedingTime').innerHTML = '---'

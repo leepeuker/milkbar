@@ -19,6 +19,6 @@ class Dashboard
             header('Location: /');
         }
 
-        echo $this->twig->render('dashboard.html.twig');
+        echo $this->twig->render('dashboard.html.twig', ['timeUntilNextMeal' => $_SESSION['user']['timeUntilNextMeal']]);
     }
 }
