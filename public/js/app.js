@@ -8,9 +8,15 @@ if ('serviceWorker' in navigator) {
 }
 
 let sessions
+let latestSessionTime
+let hr = 0
+let min = 0
+let sec = 0
 
 document.addEventListener('DOMContentLoaded', async function () {
   await refreshSessionData()
+
+  timerCycle()
 
   document.getElementById('addNursingTime').addEventListener('click', function () {
     postData('/api/session').then(() => refreshSessionData())
@@ -76,6 +82,44 @@ document.addEventListener('DOMContentLoaded', async function () {
   })
 })
 
+function timerCycle () {
+  setTimeout('timerCycle()', 1000)
+
+  if (sessions.length === 0) {
+    document.getElementById('stopwatch').innerHTML = '---'
+
+    return
+  }
+
+  sec = parseInt(sec)
+  min = parseInt(min)
+  hr = parseInt(hr)
+
+  sec = sec + 1
+
+  if (sec == 60) {
+    min = min + 1
+    sec = 0
+  }
+  if (min == 60) {
+    hr = hr + 1
+    min = 0
+    sec = 0
+  }
+
+  if (sec < 10 || sec == 0) {
+    sec = '0' + sec
+  }
+  if (min < 10 || min == 0) {
+    min = '0' + min
+  }
+  if (hr < 10 || hr == 0) {
+    hr = '0' + hr
+  }
+
+  document.getElementById('stopwatch').innerHTML = hr + ':' + min + ':' + sec
+}
+
 function resetSessionModal () {
   document.getElementById('sessionTimeModalInput').value = null
   document.getElementById('leftBoob').checked = false
@@ -100,11 +144,33 @@ function addSessionToList (session) {
   sessionList.prepend(li)
 }
 
+function getLatestSessionTime () {
+  latestSessionTime = null
+  sec = null
+  min = null
+  hr = null
+
+  sessions.forEach(function (session) {
+    let sessionTime = new Date(session.time)
+    if (latestSessionTime === null || sessionTime > latestSessionTime) {
+      latestSessionTime = sessionTime
+    }
+  })
+
+  let diff = Math.abs(new Date() - latestSessionTime)
+
+  let diffString = new Date(diff).toISOString().substr(11, 8)
+
+  sec = diffString.substr(6, 2)
+  min = diffString.substr(3, 2)
+  hr = diffString.substr(0, 2)
+}
+
 async function refreshSessionData () {
   document.getElementById('sessionList').innerHTML = ''
   document.getElementById('loadingSpinner').classList.remove('hidden')
-  document.getElementById('feedingTime').innerHTML = ''
-  document.getElementById('nextFeedingLoadingSpinner').classList.remove('hidden')
+  document.getElementById('stopwatch').innerHTML = ''
+  document.getElementById('stopwatchLoadingSpinner').classList.remove('hidden')
 
   await fetchSessions()
 
@@ -112,16 +178,10 @@ async function refreshSessionData () {
     addSessionToList(session)
   })
 
-  document.getElementById('loadingSpinner').classList.add('hidden')
-  document.getElementById('nextFeedingLoadingSpinner').classList.add('hidden')
+  getLatestSessionTime()
 
-  if (sessions.length > 0) {
-    let timeUntilNextMeal = document.getElementById('feedingTime').getAttribute('timeUntilNextMeal')
-    let nextFeedingTime = new Date(new Date(sessions[sessions.length - 1].time).getTime() + timeUntilNextMeal * 60 * 60000)
-    document.getElementById('feedingTime').innerHTML = formatDateToLocalTime(nextFeedingTime)
-  } else {
-    document.getElementById('feedingTime').innerHTML = '---'
-  }
+  document.getElementById('loadingSpinner').classList.add('hidden')
+  document.getElementById('stopwatchLoadingSpinner').classList.add('hidden')
 }
 
 function fetchSessions () {
