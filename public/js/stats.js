@@ -36,14 +36,14 @@ async function refreshSessionCount () {
 
 function syncSessionCount () {
   var startDateInputData = document.getElementById('startTime').value.match(/(\d{1,2})\.(\d{1,2})\.(\d{4})/)
-  var startDate = startDateInputData[1] + '.' + startDateInputData[2] + '.' + startDateInputData[3]
   var endDateInputData = document.getElementById('startTime').value.match(/\d{1,2}\.\d{1,2}\.\d{4} to (\d{1,2})\.(\d{1,2})\.(\d{4})/)
 
-  if (endDateInputData === null) {
+  if (startDateInputData === null || endDateInputData === null) {
     sessionCount = '-'
     return
   }
 
+  var startDate = startDateInputData[1] + '.' + startDateInputData[2] + '.' + startDateInputData[3]
   var endDate = endDateInputData[1] + '.' + endDateInputData[2] + '.' + endDateInputData[3]
 
   return fetchData('/api/session/count?startDate=' + startDate + '&endDate=' + endDate)
