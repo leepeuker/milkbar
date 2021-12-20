@@ -26,7 +26,7 @@ class Session
     {
         $maxAge = (int)$request->getGetParameters()['maxAge'];
 
-        echo json_encode($this->repository->fetchAllInTimeframe($maxAge, $_SESSION['user']['id']), JSON_THROW_ON_ERROR);
+        echo json_encode($this->repository->fetchAllInTimeframeByUserId($maxAge, $_SESSION['user']['id']), JSON_THROW_ON_ERROR);
     }
 
     public function post() : void

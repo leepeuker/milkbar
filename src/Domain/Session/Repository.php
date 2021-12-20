@@ -10,7 +10,7 @@ interface Repository
 
     public function delete(Uuid $sessionId) : void;
 
-    public function fetchAllInTimeframe(int $hours, int $userId) : EntityList;
+    public function fetchAllInTimeframeByUserId(int $hours, int $userId) : EntityList;
 
     public function update(Entity $session) : void;
 }
