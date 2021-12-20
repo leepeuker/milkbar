@@ -25,14 +25,11 @@ class Stats
         }
 
         $userId = (int)$_SESSION['user']['id'];
-        $startDate = DateTime::createFromString('2021-07-24 00:00:00');
-        $endDate = DateTime::createFromString('2021-12-24 00:00:00');
 
         echo $this->twig->render(
             'stats.html.twig',
             [
                 'firstSessionDate' => $this->sessionRepository->findFirstSessionDate($userId)?->format('d.m.Y'),
-                'sessionCount' => $this->sessionRepository->fetchCountByDatesAndUserId($startDate, $endDate, $userId),
             ]
         );
     }

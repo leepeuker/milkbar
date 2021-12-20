@@ -29,6 +29,16 @@ class Session
         echo json_encode($this->repository->fetchAllInTimeframeByUserId($maxAge, $_SESSION['user']['id']), JSON_THROW_ON_ERROR);
     }
 
+    public function getCount(Request $request) : void
+    {
+        $userId = (int)$_SESSION['user']['id'];
+        $getParameters = $request->getGetParameters();
+        $startDate = DateTime::createFromString($getParameters['startDate']);
+        $endDate = DateTime::createFromString($getParameters['endDate'] . ' 23:59:59');
+
+        echo $this->repository->fetchCountByDatesAndUserId($startDate, $endDate, $userId);
+    }
+
     public function post() : void
     {
         $session = Entity::createFromParameters(

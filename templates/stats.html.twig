@@ -19,7 +19,7 @@
     <main role="main" class="container" style="padding-top: 1rem">
         <h5>Sessions in timeframe</h5>
         <input id="firstSessionDate" type="hidden" value="{{ firstSessionDate }}">
-        <input class="form-control" id="startTime" name="startTime" required="" type="text" disabled>
-        <p style="padding-top: 0.5em">Count: {{ sessionCount }}</p>
+        <input class="form-control" id="startTime" name="startTime" required="" type="text">
+        <p style="padding-top: 0.5em">Count: <span id="sessionCount"> - </span></p>
     </main>
 {% endblock %}

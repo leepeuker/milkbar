@@ -39,6 +39,11 @@ return static function(FastRoute\RouteCollector $routeCollector) {
         [Controller\Dashboard::class, 'get']
     );
     $routeCollector->addRoute(
+        'GET',
+        '/api/session/count',
+        [Controller\Session::class, 'getCount']
+    );
+    $routeCollector->addRoute(
         'POST',
         '/api/session',
         [Controller\Session::class, 'post']
