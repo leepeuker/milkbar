@@ -69,6 +69,18 @@ class Session implements Repository
         return (int)$data;
     }
 
+    public function findFirstSessionDate(int $userId) : ?DateTime
+    {
+        $data = $this->dbConnection->fetchOne(
+            'SELECT time AS firstSessionDate FROM session WHERE user_id = ? ORDER BY time LIMIT 1;',
+            [
+                $userId,
+            ]
+        );
+
+        return $data === false ? null : DateTime::createFromString($data);
+    }
+
     public function update(Entity $session) : void
     {
         $this->dbConnection->update(

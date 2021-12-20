@@ -4,10 +4,22 @@
     Milkbar - Settings
 {% endblock %}
 
+{% block stylesheets %}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+{% endblock %}
+
+{% block scripts %}
+    <script src="js/stats.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+{% endblock %}
+
 {% block body %}
     {{ include('navbar.html') }}
 
     <main role="main" class="container" style="padding-top: 1rem">
-        {{ sessionCount }}
+        <h5>Sessions in timeframe</h5>
+        <input id="firstSessionDate" type="hidden" value="{{ firstSessionDate }}">
+        <input class="form-control" id="startTime" name="startTime" required="" type="text" disabled>
+        <p style="padding-top: 0.5em">Count: {{ sessionCount }}</p>
     </main>
 {% endblock %}

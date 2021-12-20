@@ -12,7 +12,6 @@ class Stats
 
     private Environment $twig;
 
-
     public function __construct(Environment $twig, Repository\Session $sessionRepository)
     {
         $this->twig = $twig;
@@ -32,6 +31,7 @@ class Stats
         echo $this->twig->render(
             'stats.html.twig',
             [
+                'firstSessionDate' => $this->sessionRepository->findFirstSessionDate($userId)?->format('d.m.Y'),
                 'sessionCount' => $this->sessionRepository->fetchCountByDatesAndUserId($startDate, $endDate, $userId),
             ]
         );
