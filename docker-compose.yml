@@ -14,9 +14,6 @@ services:
       - ./:/var/www/
     depends_on:
       - milkbar-php
-    networks:
-      milkbar_net:
-        ipv4_address: 172.31.0.2
 
   milkbar-php:
     build: ./build/php
@@ -27,30 +24,16 @@ services:
     volumes:
       - ./:/var/www
       - ./build/php/php.ini:/usr/local/etc/php/php.ini
-    networks:
-      milkbar_net:
-        ipv4_address: 172.31.0.3
 
   milkbar-mysql:
-    image: mysql:5.7
+    image: mysql:8.0
     container_name: milkbar-mysql
     restart: unless-stopped
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-      MYSQL_USER: ${MYSQL_USER}
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
     volumes:
       - ./tmp/db/:/var/lib/mysql
     ports:
       - "${MYSQL_PORT}:3306"
-    networks:
-      milkbar_net:
-        ipv4_address: 172.31.0.4
-
-networks:
-  milkbar_net:
-    name: milkbar_net
-    ipam:
-      driver: default
-      config:
-        - subnet: 172.31.0.0/24

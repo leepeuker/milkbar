@@ -11,7 +11,10 @@ class Factory
 {
     public static function createConfig() : Config
     {
-        return Config::createFromFile(__DIR__ . '/../settings/config.ini');
+        $dotenv = \Dotenv\Dotenv::createImmutable(__DIR__ . '/..');
+        $dotenv->load();
+
+        return Config::createFromEnv();
     }
 
     public static function createCurrentHttpRequest() : Request
@@ -23,11 +26,11 @@ class Factory
     {
         return DBAL\DriverManager::getConnection(
             [
-                'dbname' => $config->getAsString('database.name'),
-                'user' => $config->getAsString('database.username'),
-                'password' => $config->getAsString('database.password'),
-                'host' => $config->getAsString('database.host'),
-                'driver' => $config->getAsString('database.driver'),
+                'dbname' => $config->getAsString('DB_NAME'),
+                'user' => $config->getAsString('DB_USER'),
+                'password' => $config->getAsString('DB_PASSWORD'),
+                'host' => $config->getAsString('DB_HOST'),
+                'driver' => $config->getAsString('DB_DRIVER'),
             ]
         );
     }

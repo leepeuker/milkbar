@@ -1,5 +1,5 @@
 # https://hub.docker.com/_/php
-FROM php:8.1.1-fpm-alpine3.14
+FROM php:8.1.4-fpm-alpine3.15
 
 ARG USER_ID
 
@@ -26,7 +26,7 @@ RUN docker-php-ext-install mysqli       \
                            zip
 
 # install composer
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer --version=2.1.12
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer --version=2.3.3
 
 RUN addgroup --gid "$USER_ID" "dev" \
     && adduser \

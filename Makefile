@@ -37,7 +37,7 @@ composer_update:
 db_create_database:
 	make run_cmd_mysql QUERY="DROP DATABASE IF EXISTS $(DB_NAME)"
 	make run_cmd_mysql QUERY="CREATE DATABASE $(DB_NAME)"
-	make run_cmd_mysql QUERY="GRANT ALL PRIVILEGES ON $(DB_NAME).* TO $(MYSQL_USER)@'%'"
+	make run_cmd_mysql QUERY="GRANT ALL PRIVILEGES ON $(DB_NAME).* TO $(DB_USER)@'%'"
 	make run_cmd_mysql QUERY="FLUSH PRIVILEGES;"
 	make db_migration_migrate
 
@@ -65,7 +65,7 @@ db_export:
 test: test_psalm test_phpstan
 
 test_phpstan:
-	make run_cmd_php CMD="vendor/bin/phpstan analyse src -c ./settings/phpstan.neon --level max"
+	make run_cmd_php CMD="vendor/bin/phpstan analyse src -c ./settings/phpstan.neon --level 8"
 
 test_psalm:
 	make run_cmd_php CMD="vendor/bin/psalm -c ./settings/psalm.xml --show-info=false"
