@@ -3,6 +3,7 @@
 namespace Milkbar;
 
 use Doctrine\DBAL;
+use Dotenv\Dotenv;
 use Milkbar\Application\Command;
 use Milkbar\Domain\ValueObject\Request;
 use Milkbar\Infrastructure\Config;
@@ -14,8 +15,8 @@ class Factory
 {
     public static function createConfig() : Config
     {
-        $dotenv = \Dotenv\Dotenv::createImmutable(__DIR__ . '/..');
-        $dotenv->load();
+        $dotenv = Dotenv::createMutable(__DIR__ . '/..');
+        $dotenv->safeLoad();
 
         $fpmEnvironment = $_ENV;
         $systemEnvironment = getenv();
