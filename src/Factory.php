@@ -37,7 +37,7 @@ class Factory
                 'user' => $config->getAsString('DATABASE_MYSQL_USER'),
                 'password' => $config->getAsString('DATABASE_MYSQL_PASSWORD'),
                 'host' => $config->getAsString('DATABASE_MYSQL_HOST'),
-                'charset' => $config->getAsString('DATABASE_MYSQL_CHARSET'),
+                'charset' => 'utf8mb4',
                 'driver' => 'pdo_mysql',
             ]
         );

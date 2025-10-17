@@ -19,7 +19,7 @@ return [
             'user' => $config->getAsString('DATABASE_MYSQL_USER'),
             'pass' => $config->getAsString('DATABASE_MYSQL_PASSWORD'),
             'port' => 3306,
-            'charset' => $config->getAsString('DATABASE_MYSQL_CHARSET'),
+            'charset' => 'utf8mb4',
             'collation' => 'utf8_unicode_ci',
         ],
     ],
