@@ -1,39 +1,14 @@
-version: "3.5"
-
 services:
-  milkbar-nginx:
-    build: ./build/nginx/
-    container_name: milkbar-nginx
-    restart: unless-stopped
-    working_dir: /var/www/
+  app:
+    build:
+      context: ./
+      dockerfile: ./build/Dockerfile
+      target: production
+      args:
+        - USER_ID=${USER_ID:-3000}
     ports:
-      - "${NGINX_PORT}:80"
-    volumes:
-      - ./build/nginx/conf.d/:/etc/nginx/conf.d/
-      - ./build/nginx/nginx.conf:/etc/nginx/nginx.conf
-      - ./:/var/www/
-    depends_on:
-      - milkbar-php
-
-  milkbar-php:
-    build: ./build/php
-    container_name: milkbar-php
-    restart: unless-stopped
-    working_dir: /var/www
-    user: "${USER_ID}"
-    volumes:
-      - ./:/var/www
-      - ./build/php/php.ini:/usr/local/etc/php/php.ini
-
-  milkbar-mysql:
-    image: mysql:8.0
-    container_name: milkbar-mysql
-    restart: unless-stopped
+      - "${HTTP_PORT:-80}:8080"
     environment:
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-      MYSQL_USER: ${DB_USER}
-      MYSQL_PASSWORD: ${DB_PASSWORD}
-    volumes:
-      - ./tmp/db/:/var/lib/mysql
-    ports:
-      - "${MYSQL_PORT}:3306"
+      XDEBUG_MODE: "${XDEBUG_MODE:-off}"
+      XDEBUG_HOST: "${XDEBUG_HOST:-host.docker.internal}"
+      XDEBUG_PORT: "${XDEBUG_PORT:-9003}"

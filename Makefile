@@ -1,71 +1,89 @@
-.PHONY: build
+.PHONY:build
 
 include .env
 
-# Docker
-########
-build:
-	docker-compose build --no-cache --build-arg USER_ID=${USER_ID}
+# Container management
+######################
+build: build
+	docker compose build
 
 up:
-	docker-compose up -d
+	docker compose up -d
+
+up_mysql:
+	docker compose -f docker-compose.yml -f docker-compose.mysql.yml up -d
+
+up_development:
+	docker compose -f docker-compose.yml -f docker-compose.development.yml up -d
+
+up_development_mysql:
+	docker compose -f docker-compose.yml -f docker-compose.development.yml -f docker-compose.mysql.yml up -d
 
 down:
-	docker-compose down
+	docker compose \
+	 -f docker-compose.yml \
+	 -f docker-compose.mysql.yml \
+	 down
 
-reup: down up
+logs:
+	docker compose logs -f
 
-connect_php_bash:
-	docker exec -it milkbar-php bash
+build_development:
+	docker compose -f docker-compose.yml -f docker-compose.development.yml build --no-cache
+	make up_development
+	make composer_install
+	make app_database_migrate
 
-run_cmd_php:
-	docker exec -i milkbar-php bash -c "${CMD}"
+# Container interaction
+#######################
+exec_app_bash:
+	docker compose exec app bash
 
-run_cmd_mysql:
-	docker exec -it milkbar-mysql bash -c "mysql -uroot -p${MYSQL_ROOT_PASSWORD} -e \"$(QUERY)\""
+exec_app_cmd:
+	docker compose exec app bash -c "${CMD}"
+
+exec_mysql_cli:
+	docker compose exec mysql sh -c "mysql -u${DB_USER} -p${DB_PASSWORD} ${DATABASE_MYSQL_NAME}"
+
+exec_mysql_query:
+	docker compose exec mysql bash -c "mysql -uroot -p${DATABASE_MYSQL_ROOT_PASSWORD} -e \"$(QUERY)\""
 
 # Composer
 ##########
 composer_install:
-	docker exec milkbar-php bash -c "composer install"
+	make exec_app_cmd CMD="composer install"
 
 composer_update:
-	docker exec milkbar-php bash -c "composer update"
+	make exec_app_cmd CMD="composer update"
+
+composer_test:
+	make exec_app_cmd CMD="composer test"
 
 # Database
 ##########
-db_create_database:
-	make run_cmd_mysql QUERY="DROP DATABASE IF EXISTS $(DB_NAME)"
-	make run_cmd_mysql QUERY="CREATE DATABASE $(DB_NAME)"
-	make run_cmd_mysql QUERY="GRANT ALL PRIVILEGES ON $(DB_NAME).* TO $(DB_USER)@'%'"
-	make run_cmd_mysql QUERY="FLUSH PRIVILEGES;"
-	make db_migration_migrate
+db_mysql_create_database:
+	make exec_mysql_query QUERY="CREATE DATABASE IF NOT EXISTS $(DATABASE_MYSQL_NAME)"
+	make exec_mysql_query QUERY="GRANT ALL PRIVILEGES ON $(DATABASE_MYSQL_NAME).* TO $(DATABASE_MYSQL_USER)@'%'"
+	make exec_mysql_query QUERY="FLUSH PRIVILEGES;"
+	make app_database_migrate
 
-db_migration_migrate:
-	make run_cmd_php CMD="vendor/bin/phinx $(PHINX) migrate -c ./settings/phinx.php -e $(ENV)"
+db_mysql_import:
+	docker cp storage/dump.sql milkbar-mysql-1:/tmp/dump.sql
+	docker compose exec mysql bash -c 'mysql -uroot -p${DATABASE_MYSQL_ROOT_PASSWORD} milkbar < /tmp/dump.sql'
 
-db_migration_rollback:
-	make run_cmd_php CMD="vendor/bin/phinx rollback -c ./settings/phinx.php -e $(ENV)"
+db_mysql_export:
+	docker compose exec mysql bash -c 'mysqldump --databases --add-drop-database -uroot -p$(DATABASE_MYSQL_ROOT_PASSWORD) $(DATABASE_MYSQL_NAME) > /tmp/dump.sql'
+	docker cp milkbar-mysql-1:/tmp/dump.sql storage/dump.sql
+	chown $(USER_ID):$(USER_ID) storage/dump.sql
 
 db_migration_create:
-	make run_cmd_php CMD="vendor/bin/phinx create Migration -c ./settings/phinx.php"
+	make exec_app_cmd CMD="vendor/bin/phinx create Migration -c ./settings/phinx.php"
 
-db_import:
-	docker cp $(FILE) milkbar-mysql:/tmp/dump.sql
-	docker exec milkbar-mysql bash -c 'mysql -uroot -p${MYSQL_ROOT_PASSWORD} < /tmp/dump.sql'
-	docker exec milkbar-mysql bash -c 'rm /tmp/dump.sql'
+# App commands
+##############
+app_user_create_test:
+	make exec_app_cmd CMD="php bin/console.php"
 
-db_export:
-	docker exec milkbar-mysql bash -c 'mysqldump --databases --no-tablespaces --add-drop-database -u$(DB_USER) -p$(DB_PASSWORD) $(DB_NAME) > /tmp/dump.sql'
-	docker cp milkbar-mysql:/tmp/dump.sql tmp/milkbar-`date +%Y-%m-%d-%H-%M-%S`.sql
-	docker exec milkbar-mysql bash -c 'rm /tmp/dump.sql'
-
-# Tests
-#######
-test: test_psalm test_phpstan
-
-test_phpstan:
-	make run_cmd_php CMD="vendor/bin/phpstan analyse src -c ./settings/phpstan.neon --level 8"
-
-test_psalm:
-	make run_cmd_php CMD="vendor/bin/psalm -c ./settings/psalm.xml --show-info=false"
+# Shortcuts
+php: exec_app_bash
+test: composer_test

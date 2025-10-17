@@ -14,7 +14,10 @@ class Factory
         $dotenv = \Dotenv\Dotenv::createImmutable(__DIR__ . '/..');
         $dotenv->load();
 
-        return Config::createFromEnv();
+        $fpmEnvironment = $_ENV;
+        $systemEnvironment = getenv();
+
+        return Config::createFromArray(array_merge($fpmEnvironment, $systemEnvironment));
     }
 
     public static function createCurrentHttpRequest() : Request
@@ -26,11 +29,12 @@ class Factory
     {
         return DBAL\DriverManager::getConnection(
             [
-                'dbname' => $config->getAsString('DB_NAME'),
-                'user' => $config->getAsString('DB_USER'),
-                'password' => $config->getAsString('DB_PASSWORD'),
-                'host' => $config->getAsString('DB_HOST'),
-                'driver' => $config->getAsString('DB_DRIVER'),
+                'dbname' => $config->getAsString('DATABASE_MYSQL_NAME'),
+                'user' => $config->getAsString('DATABASE_MYSQL_USER'),
+                'password' => $config->getAsString('DATABASE_MYSQL_PASSWORD'),
+                'host' => $config->getAsString('DATABASE_MYSQL_HOST'),
+                'charset' => $config->getAsString('DATABASE_MYSQL_CHARSET'),
+                'driver' => 'pdo_mysql',
             ]
         );
     }

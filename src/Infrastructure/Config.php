@@ -4,16 +4,13 @@ namespace Milkbar\Infrastructure;
 
 class Config
 {
-    private array $data;
-
-    public function __construct(array $config)
+    private function __construct(private readonly array $data)
     {
-        $this->data = $config;
     }
 
-    public static function createFromEnv() : self
+    public static function createFromArray(array $data) : self
     {
-        return new self($_ENV);
+        return new self($data);
     }
 
     public function getAsArray(string $parameter) : array
