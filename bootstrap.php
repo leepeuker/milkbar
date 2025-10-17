@@ -14,6 +14,9 @@ $builder->addDefinitions(
         \Milkbar\Domain\User\Repository::class => DI\get(\Milkbar\Application\Repository\User::class),
         \Doctrine\DBAL\Connection::class => DI\factory([Factory::class, 'createDbConnection']),
         \Milkbar\Domain\ValueObject\Request::class => DI\factory([Factory::class, 'createCurrentHttpRequest']),
+        \Milkbar\Application\Command\DatabaseMigrationStatus::class => DI\factory([Factory::class, 'createDatabaseMigrationStatusCommand']),
+        \Milkbar\Application\Command\DatabaseMigrationMigrate::class => DI\factory([Factory::class, 'createDatabaseMigrationMigrateCommand']),
+        \Milkbar\Application\Command\DatabaseMigrationRollback::class => DI\factory([Factory::class, 'createDatabaseMigrationRollbackCommand']),
     ]
 );
 

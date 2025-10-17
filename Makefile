@@ -4,9 +4,6 @@ include .env
 
 # Container management
 ######################
-build: build
-	docker compose build
-
 up:
 	docker compose up -d
 
@@ -81,6 +78,15 @@ db_migration_create:
 
 # App commands
 ##############
+app_database_migrate:
+	make exec_app_cmd CMD="php bin/console.php database:migration:migrate"
+
+app_database_rollback:
+	make exec_app_cmd CMD="php bin/console.php database:migration:rollback"
+
+app_database_status:
+	make exec_app_cmd CMD="php bin/console.php database:migration:status"
+
 app_user_create_test:
 	make exec_app_cmd CMD="php bin/console.php"
 

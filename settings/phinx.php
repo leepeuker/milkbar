@@ -11,14 +11,15 @@ return [
     ],
     'environments' => [
         'default_migration_table' => 'phinxlog',
-        $config->getAsString('ENV') => [
-            'adapter' => $config->getAsString('DB_DRIVER') === 'pdo_mysql' ? 'mysql' : $config->getAsString('DB.driver'),
-            'host' => $config->getAsString('DB_HOST'),
-            'name' => $config->getAsString('DB_NAME'),
-            'user' => $config->getAsString('DB_USER'),
-            'pass' => $config->getAsString('DB_PASSWORD'),
+        'default_environment' => 'dynamic',
+        'dynamic' => [
+            'adapter' => 'mysql',
+            'host' => $config->getAsString('DATABASE_MYSQL_HOST'),
+            'name' => $config->getAsString('DATABASE_MYSQL_NAME'),
+            'user' => $config->getAsString('DATABASE_MYSQL_USER'),
+            'pass' => $config->getAsString('DATABASE_MYSQL_PASSWORD'),
             'port' => 3306,
-            'charset' => 'utf8',
+            'charset' => $config->getAsString('DATABASE_MYSQL_CHARSET'),
             'collation' => 'utf8_unicode_ci',
         ],
     ],
