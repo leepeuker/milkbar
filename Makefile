@@ -88,7 +88,10 @@ app_database_status:
 	make exec_app_cmd CMD="php bin/console.php database:migration:status"
 
 app_user_create_test:
-	make exec_app_cmd CMD="php bin/console.php"
+	make exec_app_cmd CMD="php bin/console.php user:create test@test.de test"
+
+app_user_udpate_password:
+	make exec_app_cmd CMD="php bin/console.php user:create test@test.de test1"
 
 # Shortcuts
 php: exec_app_bash

@@ -49,4 +49,28 @@ class User implements Repository
             ]
         );
     }
+
+    public function updatePassword(string $email, string $password) : void
+    {
+        $this->dbConnection->update(
+            'user',
+            [
+                'password' => password_hash($password, PASSWORD_DEFAULT),
+            ],
+            [
+                'email' => $email,
+            ]
+        );
+    }
+
+    public function createUser(string $email, string $password) : void
+    {
+        $this->dbConnection->insert(
+            'user',
+            [
+                'email' => $email,
+                'password' => password_hash($password, PASSWORD_DEFAULT),
+            ]
+        );
+    }
 }
